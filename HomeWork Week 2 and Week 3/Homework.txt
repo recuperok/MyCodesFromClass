@@ -1,0 +1,13 @@
+03/06/18
+•	This class will prepare for Securirty+ certification. 
+•	0-day vulnerability – There is no background to the vulnerability. It has most likely been exploited already.
+•	Risk calculations weigh a potential threat against the likelihood or probability of it occurring.
+o	Example? 
+•	Risk assessment deals with the threats, vulnerabilities, and impacts of a loss of a system or a loss of information itself.
+o	What would happen to Amazon if their credit card processing system went down for an hour? Major loss of money = High Risk
+•	A vulnerability is a weakness that could be exploited by a threat.
+o	Example if a vulnerability pertaining to your car? Airbag shooting metal = High risk
+•	Risk is the probability or likelihood of a threat exploiting a vulnerability and resulting in a loss.
+•	Risk = Threat * Vulnerability
+•	Real life Scenario…If a new piece of malware affecting Windows 7 is being used in the wild and your company uses all Linux machines, your risk = 0.
+•	You can never get your TOTAL risk to 0.
