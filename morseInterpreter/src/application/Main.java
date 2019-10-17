@@ -1,3 +1,12 @@
+/*  Creator: Kevin Recupero
+ *  Class: Survey Of Programming Languages
+ *  Description: This code allows user to type messages into morse.
+ *  			 As they type it will automatically be translated.
+ *  			 Morse code in text files may also be uploaded.
+ *  Future: I plan to make this go both ways: morse to english and english to morse
+ *          It would also be interesting to send messages between computers using udp
+ *          in morse.
+ */
 package application;
 	
 import java.io.File;
@@ -21,8 +30,8 @@ public class Main extends Application {
 	Font f = new Font("Verdana", 20);
 	
 	String morseCode = "";
-	
 	Hashtable<String, String> morse = new Hashtable<String, String>();
+	
 	Text Alphatxt = new Text("A = .-       B = -...     C = -.-."
 			+ "    D = -..     E = .        F = ..-.    G = --.      H = ....\n"
 			+ "I  = ..        J = .---     K = -.-     L = .-..    M = --    "
@@ -35,7 +44,7 @@ public class Main extends Application {
 	
 	Button Mabtn = new Button("Dash"), Mrbtn = new Button("Dot"), 
 			Spbtn = new Button("Space"), Babtn = new Button("Back"),
-			Imbtn = new Button("Import");
+			Imbtn = new Button("Import"), Clbtn = new Button("Clear");
 	
 	VBox vbox = new VBox();
 	HBox hbox = new HBox(), debox = new HBox();
@@ -49,11 +58,11 @@ public class Main extends Application {
 		mainStage.show();
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	public void setup() {
+		/*
+		 * This class will setup the layout of the GUI
+		 * as well as the buttons
+		 */
 		Display.setFont(f);
 		Display.setTextAlignment(TextAlignment.CENTER);
 		Display.setWrappingWidth(650);
@@ -65,10 +74,10 @@ public class Main extends Application {
 		Alphatxt.setWrappingWidth(450);
 		
 		debox.setSpacing(25);
-		hbox.setSpacing(15);
+		hbox.setSpacing(12);
 		vbox.setSpacing(15);
 		
-		hbox.getChildren().addAll(Mabtn, Mrbtn, Spbtn, Babtn, Imbtn);
+		hbox.getChildren().addAll(Mabtn, Mrbtn, Spbtn, Babtn, Imbtn, Clbtn);
 		vbox.getChildren().addAll(Display, hbox, Output, Alphatxt);
 		
 		Mabtn.setOnAction(e->{
@@ -92,20 +101,32 @@ public class Main extends Application {
 		Imbtn.setOnAction(e->{
 			FileChooser fc = new FileChooser();
 			File file = fc.showOpenDialog(Main.mainStage);
-			String imported = file.toString();
-			try {
-				imported = new String(Files.readAllBytes(Paths.get(imported)));
-				Display.setText(imported);
-				
-				Output.setText(morse_interpret(Display.getText()));
-				//Output.setText(morse_interpret(Display.getText()));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			if (file != null) {
+				String imported = file.toString();
+				try {
+					imported = new String(Files.readAllBytes(Paths.get(imported)));
+					Display.setText(imported);
+					Output.setText(morse_interpret(Display.getText()));
+				} catch (IOException e1) {
+				}
+			}else {
+				Display.setText("ERROR: No file selected");
+				Output.setText("ERROR: No file selected");
 			}
+			
+			
+		});
+		Clbtn.setOnAction(e->{
+			Display.setText("");
+			Output.setText("");
 		});
 	}
 	public String morse_interpret(String str) {
+		/*
+		 * This class will create the hashtable
+		 * When it is called it will take the string
+		 * and interpret the English from it
+		 */
 		morse.put(".-", "A");
 		morse.put("-...", "B");
 		morse.put("-.-.", "C");
@@ -154,26 +175,34 @@ public class Main extends Application {
 		}
 		return english;
 	}
-	
-	/*public String reverse(String str) {
-		String reversed = "";
-		
-		String value = "A";
-		
-		for (String keys: morse.keySet()) {
-			System.out.println("hi");
-		      if (morse.get(keys).equals(value)) {
-		        reversed += morse.get(keys);
-		        System.out.println(reversed);
-		      }
-		 }
-		
-		for (int x = 0; x < str.length(); x++) {
-			value = str.substring(x, x+1);
-			
-			
-		}
-		System.out.println(reversed);
-		return reversed;
-	}*/
 }
+
+
+// UNUSED CODE FOR NOW
+
+/*public String reverse(String str) {
+String reversed = "";
+
+String value = "A";
+
+for (String keys: morse.keySet()) {
+	System.out.println("hi");
+      if (morse.get(keys).equals(value)) {
+        reversed += morse.get(keys);
+        System.out.println(reversed);
+      }
+ }
+
+for (int x = 0; x < str.length(); x++) {
+	value = str.substring(x, x+1);
+	
+	
+}
+System.out.println(reversed);
+return reversed;
+
+
+public static void main(String[] args) {
+		launch(args);
+	}
+}*/
